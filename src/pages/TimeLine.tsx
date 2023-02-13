@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, KeyboardEvent, useState } from "react";
 import { Header } from "../components/Header";
 import { Separator } from "../components/Separator";
 import { Tweet } from "../components/Tweet";
@@ -20,6 +20,14 @@ export function TimeLine() {
     setTweets([newTweet, ...tweets]);
     setNewTweet("");
   }
+
+  function handleHotKeySubmit(event: KeyboardEvent) {
+    if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+      setTweets([newTweet, ...tweets]);
+      setNewTweet("");
+    }
+  }
+
   return (
     <main className="timeline">
       <Header title="Home" />
@@ -28,6 +36,7 @@ export function TimeLine() {
         <label htmlFor="tweet">
           <img src="https://github.com/Futila.png" alt="Fernando Futila" />
           <textarea
+            onKeyDown={handleHotKeySubmit}
             onChange={(event) => setNewTweet(event.target.value)}
             value={newTweet}
             id="tweet"
